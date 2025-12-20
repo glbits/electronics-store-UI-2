@@ -4,31 +4,37 @@ import { Wrench, Zap, HardHat, Lightbulb, PenTool, ClipboardCheck } from 'lucide
 export const Services: React.FC = () => {
   const serviceList = [
     {
+      id: "wiring",
       title: "Commercial Wiring",
       description: "Complete electrical infrastructure for offices, retail spaces, and warehouses. Certified ISI standard installations.",
       icon: <Zap className="text-secondary" size={32} />
     },
     {
+      id: "smart-home",
       title: "Smart Home Setup",
       description: "End-to-end automation including smart lighting, climate control, and security systems integrated with mobile apps.",
       icon: <Lightbulb className="text-accent" size={32} />
     },
     {
+      id: "industrial",
       title: "Industrial Maintenance",
       description: "Scheduled maintenance and emergency repairs for heavy-duty industrial machinery and power systems.",
       icon: <Wrench className="text-gray-600" size={32} />
     },
     {
+      id: "safety",
       title: "Safety Audits",
       description: "Professional electrical safety inspections to identify risks and ensure compliance with Indian safety standards.",
       icon: <ClipboardCheck className="text-green-600" size={32} />
     },
     {
+      id: "lighting-design",
       title: "Custom Lighting Design",
       description: "Expert consultation and design for architectural lighting, landscape illumination, and energy-efficient solutions.",
       icon: <PenTool className="text-purple-600" size={32} />
     },
     {
+      id: "consulting",
       title: "On-Site Consulting",
       description: "Technical site visits by qualified engineers to provide estimates and technical blueprints for complex projects.",
       icon: <HardHat className="text-amber-600" size={32} />
@@ -48,8 +54,12 @@ export const Services: React.FC = () => {
       {/* Grid */}
       <section className="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {serviceList.map((service, index) => (
-            <div key={index} className="p-8 border border-gray-100 rounded-2xl bg-white hover:shadow-xl transition-all duration-300 group">
+          {serviceList.map((service) => (
+            <div 
+              key={service.id} 
+              id={service.id} 
+              className="p-8 border border-gray-100 rounded-2xl bg-white hover:shadow-xl transition-all duration-300 group scroll-mt-24"
+            >
               <div className="mb-6 p-4 bg-gray-50 rounded-xl w-fit group-hover:bg-white group-hover:shadow-md transition-all">
                 {service.icon}
               </div>

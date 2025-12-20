@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { ShoppingCart, Menu, X, Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, Trash2, Plus, Minus, ArrowRight } from 'lucide-react';
 import { CartContext } from '../App';
@@ -108,65 +108,84 @@ export const Header: React.FC = () => {
 };
 
 export const Footer: React.FC = () => {
+  const { pathname, hash } = useLocation();
+
+  // Handle hash scrolling if navigating from another page
+  useEffect(() => {
+    if (hash) {
+      const element = document.getElementById(hash.replace('#', ''));
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
+
+  const footerLinkClass = "block py-1 hover:text-accent hover:translate-x-1 transition-all duration-200 cursor-pointer";
+
   return (
-    <footer className="bg-primary text-gray-300 pt-12 pb-8">
+    <footer className="bg-primary text-gray-300 pt-16 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div>
-            <h3 className="text-white text-xl font-bold mb-4 flex items-center gap-2">
-              <span className="bg-accent text-white p-1 rounded text-sm">E</span> ElectroMart
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
+          <div className="space-y-6">
+            <h3 className="text-white text-2xl font-bold flex items-center gap-2">
+              <span className="bg-accent text-white p-1.5 rounded text-base">E</span> ElectroMart
             </h3>
-            <p className="text-sm mb-4">
-              Your one-stop destination for premium electronics, electrical supplies, and smart home solutions in India.
+            <p className="text-sm leading-relaxed">
+              Leading the electrical supply industry in India since 2010. Quality, safety, and innovation at your fingertips.
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-white transition-colors"><Facebook size={20} /></a>
-              <a href="#" className="hover:text-white transition-colors"><Twitter size={20} /></a>
-              <a href="#" className="hover:text-white transition-colors"><Instagram size={20} /></a>
-              <a href="#" className="hover:text-white transition-colors"><Linkedin size={20} /></a>
+              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
+                <a key={i} href="#" className="p-2 bg-white/5 rounded-lg hover:bg-accent hover:text-white transition-colors">
+                  <Icon size={18} />
+                </a>
+              ))}
             </div>
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4">Quick Links</h4>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/" className="hover:text-accent transition-colors">Home</Link></li>
-              <li><Link to="/catalog" className="hover:text-accent transition-colors">Products</Link></li>
-              <li><Link to="/about" className="hover:text-accent transition-colors">About Us</Link></li>
-              <li><Link to="/faq" className="hover:text-accent transition-colors">FAQs</Link></li>
+            <h4 className="text-white font-bold text-lg mb-6 uppercase tracking-wider">Quick Links</h4>
+            <ul className="space-y-3 text-sm">
+              <li><Link to="/" className={footerLinkClass}>Home</Link></li>
+              <li><Link to="/catalog" className={footerLinkClass}>Products</Link></li>
+              <li><Link to="/about" className={footerLinkClass}>About Us</Link></li>
+              <li><Link to="/faq" className={footerLinkClass}>FAQs</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4">Our Services</h4>
-            <ul className="space-y-2 text-sm">
-              <li><Link to="/services" className="hover:text-accent transition-colors">Smart Home Setup</Link></li>
-              <li><Link to="/services" className="hover:text-accent transition-colors">Wiring Solutions</Link></li>
-              <li><Link to="/services" className="hover:text-accent transition-colors">Safety Audits</Link></li>
-              <li><Link to="/services" className="hover:text-accent transition-colors">Lighting Design</Link></li>
+            <h4 className="text-white font-bold text-lg mb-6 uppercase tracking-wider">Our Services</h4>
+            <ul className="space-y-3 text-sm">
+              <li><Link to="/services#smart-home" className={footerLinkClass}>Smart Home Setup</Link></li>
+              <li><Link to="/services#wiring" className={footerLinkClass}>Wiring Solutions</Link></li>
+              <li><Link to="/services#safety" className={footerLinkClass}>Safety Audits</Link></li>
+              <li><Link to="/services#lighting-design" className={footerLinkClass}>Lighting Design</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-white font-semibold mb-4">Contact Info</h4>
-            <ul className="space-y-4 text-sm">
+            <h4 className="text-white font-bold text-lg mb-6 uppercase tracking-wider">Contact Info</h4>
+            <ul className="space-y-5 text-sm">
               <li className="flex items-start gap-3">
-                <MapPin size={18} className="flex-shrink-0 text-accent" />
+                <MapPin size={20} className="flex-shrink-0 text-accent" />
                 <span>456 Electronic City, Bengaluru, Karnataka 560100</span>
               </li>
               <li className="flex items-center gap-3">
-                <Phone size={18} className="flex-shrink-0 text-accent" />
+                <Phone size={20} className="flex-shrink-0 text-accent" />
                 <span>+91 (555) 123-4567</span>
               </li>
               <li className="flex items-center gap-3">
-                <Mail size={18} className="flex-shrink-0 text-accent" />
+                <Mail size={20} className="flex-shrink-0 text-accent" />
                 <span>support@electromart.in</span>
               </li>
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-700 mt-12 pt-8 text-center text-xs">
-          <p>&copy; {new Date().getFullYear()} ElectroMart. All rights reserved.</p>
+        <div className="border-t border-gray-800 mt-16 pt-8 text-center text-xs text-gray-500">
+          <p>&copy; {new Date().getFullYear()} ElectroMart. All rights reserved. Designed for excellence.</p>
         </div>
       </div>
     </footer>
